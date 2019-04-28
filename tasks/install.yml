@@ -1,0 +1,20 @@
+---
+# this will be installed via remote package which will set up a repo for updates
+
+# the rpm package is here: http://get.opera.com/ftp/pub/opera/desktop/{{ version }}/linux/opera-stable_{{ version }}_amd64.rpm
+- name: do these tasks for RedHat-y systems
+  block:
+    - name: install|rpm| install the package from the internet
+      yum:
+        name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+        state: present
+  when: ansible_os_family == "RedHat"
+
+# the deb package is here: http://get.opera.com/ftp/pub/opera/desktop/{{ version }}/linux/opera-stable_{{ version }}_amd64.deb
+- name: do these tasks for Ubuntu systems
+  block:
+    - name: install|deb| install the package from the internet
+      apt:
+        deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        state: present
+  when: ansible_os_family == "Debian"

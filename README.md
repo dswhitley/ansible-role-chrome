@@ -1,45 +1,37 @@
-Ansible Role: chrome [![Build Status](https://travis-ci.com/dswhitley/ansible-role-chrome.svg?branch=master)](https://travis-ci.com/dswhitley/ansible-role-chrome)
-=====================================
+# Ansible Role: chrome
 
-This role will install the [Chrome](https://www.google.com/chrome/) browser.
+This is an Ansible role to install the [Chrome](https://www.google.com/chrome/)
+browser.
 
-The repository varies between OSes and even between versions of the same OS.
-But in the end, it is widely available in repositories so this is how it is
-installed for the various OSes supported in this role.
+## Important Notes
 
-Important Notes
----------------
+* Initially I was configuring the repository for each OS and then installing the
+  package via repo.  But the package install *also* created a repo, so I have
+  opted to just install the latest version of the package, which installs a repo
+  to keep it up to date
+* I am using the `yum` and `apt` modules to allow for remote package install
 
-* This role will install the latest version of the package and therefore uses
-  the "latest" state which is largely frowned upon
-* There are some site specific configurations for the browser, but this role
-  will simply install the package.  Any subsequent configuration will be
-  handled in a different, site-specific role
-
-Requirements
-------------
+## Requirements
 
 Any package or additional repository requirements will be addressed in the role.
 
-Role Variables
---------------
+## Role Variables
 
-N/A
+There are no variables for this role.  It simply does the install and all of the
+configuration is saved external to the app.
 
-Example Playbook
-----------------
+## Example Playbook
 
-Here is an example playbook:
+Playbook with various options specified:
 
 ```yaml
 - hosts: localhost
   connection: local
   roles:
-    - role: chrome
+    - role: ansible-role-chrome
 ```
 
-Inclusion
----------
+## Inclusion
 
 I envision this role being included in a larger project through the use of a
 `requirements.yml` file.  So here is an example of what you would need in your
@@ -47,7 +39,7 @@ file:
 
 ```yaml
 # get the chrome role from github
-- src: https://github.com/dswhitley/ansible-role-chrome.git
+- src: https://github.com/thisdwhitley/ansible-role-chrome.git
   scm: git
   name: chrome
 ```
@@ -59,34 +51,34 @@ you to "install" it (prior to use in some sort of setup script?) with:
 ansible-galaxy install -p ./roles -r requirements.yml
 ```
 
-Testing
--------
+## Testing
 
-I am relying heavily on the work by Jeff Geerling in using Travis CI for testing
-this role.  Here is a list of OSes currently being tested (using geerlingguy's
-container images):
+I am relying heavily on the work by Jeff Geerling in using molecule for testing
+this role.  I have, however, modified the tests to make them specific to what I
+am attempting to accomplish but this could still use some work.
+
+Please review those files, but here is a list of OSes currently being tested 
+(using geerlingguy's container images):
 
 * centos7
-* centos6
 * fedora27
-* ubuntu1804
-* ubuntu1604
-* ubuntu1404
-* debian9
+* fedora28
+* fedora29
+* ubuntu14
+* ubuntu16
+* ubuntu18
 * debian8
+* debian9
 
-To-do
------
+## To-do
 
-N/A
+* N/A
 
-References
-----------
+## References
 
 * [How I test Ansible configuration on 7 different OSes with Docker](https://www.jeffgeerling.com/blog/2018/how-i-test-ansible-configuration-on-7-different-oses-docker)
 
-License
--------
+## License
 
 All parts of this project are made available under the terms of the [MIT
 License](LICENSE).
